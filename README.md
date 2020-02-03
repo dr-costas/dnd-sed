@@ -69,10 +69,46 @@ method, but you will have to get the audio files and extract the features.
 
 ### Code set-up
 
-To set-up the code, you will need 
+To set-up the code and run our code, you will need to clone this repository and
+then install the dependencies using your favorite package manager. If you are 
+using Conda, then you can do: 
+
+````shell script
+$ conda env create --yes --file conda_dependencies.yml
+```` 
+
+Then, an environment with the name `dnd-sed` will be created, using Python 3.7. If
+you prefer PIP, then you can do:
+
+````shell script
+$ pip install -r pip_dependencies.txt
+````
+
+And you will be good to go! If anything is not working, please let me know by
+making an issue in this repository. 
 
 ### Data set-up
+
+To set-up the data, you first have to follow the procedure and download the
+data from the [corresponding web-page](#http://www.cs.tut.fi/sgn/arg/taslp2017-crnn-sed/tut-sed-synthetic-2016).
+Then, you should create your input/output values and use them with our method.
+
+The code in this repository offers data handling functionality. The 
+`data_feders.get_tut_sed_data_loader` function returns a PyTorch data loader, using as
+a dataset class the `data_feders.TUTSEDSynthetic2016`. 
+
+To use your extracted features with the class, you should have saved the features
+and the target values as separate files. You can specify the file names and the
+directory having these files in the settings files. 
 
 ----
 
 ## Conducting the experiments
+
+In the `settings` directory you can find all the settings that were used for the
+results presented in the paper. We uses each settings file 10 times, and then we
+averaged the results. If you want to reproduce our results, then please remember 
+to follow our procedure. 
+
+Enjoy!
+ 
