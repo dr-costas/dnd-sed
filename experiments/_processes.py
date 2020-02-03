@@ -247,16 +247,17 @@ def experiment(settings: MutableMapping,
 
     with InformAboutProcess('Creating training data loader'):
         training_data = get_tut_sed_data_loader(
-            split='training', is_test=False,
+            split='training',
             **settings['data_loader'])
 
     with InformAboutProcess('Creating validation data loader'):
         validation_data = get_tut_sed_data_loader(
-            split='validation', is_test=True,
+            split='validation',
             **settings['data_loader'])
 
     with InformAboutProcess('Creating optimizer'):
-        optimizer = Adam(model.parameters(), lr=settings['optimizer']['lr'])
+        optimizer = Adam(model.parameters(),
+                         lr=settings['optimizer']['lr'])
 
     cmd_msg('', start='')
 
@@ -292,19 +293,15 @@ def experiment(settings: MutableMapping,
         grad_norm=settings['training']['grad_norm'], **common_kwargs)
 
     del training_data
+    del validation_data
 
-    if settings['data_loader']['data_version'] == 'synthetic':
-        del validation_data
-        cmd_msg('Using separate testing split.', start='\n\n-- ')
-        with InformAboutProcess('Creating testing data loader'):
-            testing_data = get_tut_sed_data_loader(
-                split='testing', **settings['data_loader'])
+    with InformAboutProcess('Creating testing data loader'):
+        testing_data = get_tut_sed_data_loader(
+            split='testing',
+            **settings['data_loader'])
 
-        nb_examples([testing_data], ['Testing'],
-                    settings['data_loader']['batch_size'])
-    else:
-        cmd_msg('Using X-fold setting.', start='\n\n-- ')
-        testing_data = validation_data
+    nb_examples([testing_data], ['Testing'],
+                settings['data_loader']['batch_size'])
 
     cmd_msg('Starting testing', start='\n\n-- ', end='\n\n')
     testing(model=optimized_model, data_loader=testing_data,
