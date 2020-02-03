@@ -6,19 +6,19 @@
 
 This is the repository for the method presented in the paper 
 "Sound Event Detection with Depthwise Separable and Dilated Convolutions", by 
-[K. Drossos](#https://tutcris.tut.fi/portal/en/persons/konstantinos-drosos(b1070370-5156-4280-b354-6291618bb965).html), 
-[S. I. Mimilakis](#https://www.idmt.fraunhofer.de/en/institute/doctorands/mimilakis.html), 
+[K. Drossos](https://tutcris.tut.fi/portal/en/persons/konstantinos-drosos(b1070370-5156-4280-b354-6291618bb965).html), 
+[S. I. Mimilakis](https://www.idmt.fraunhofer.de/en/institute/doctorands/mimilakis.html), 
 S. Gharib, 
 Y. Li, 
-and [T. Virtanen](#https://tutcris.tut.fi/portal/en/persons/tuomas-virtanen(210e58bb-c224-40a9-bf6c-5b786297e841).html).
+and [T. Virtanen](https://tutcris.tut.fi/portal/en/persons/tuomas-virtanen(210e58bb-c224-40a9-bf6c-5b786297e841).html).
 
-Our code is based on [PyTorch framework](#https://pytorch.org/) 
+Our code is based on [PyTorch framework](https://pytorch.org/) 
 and we use the publicly available dataset 
-[TUT-SED Synthetic 2016](#http://www.cs.tut.fi/sgn/arg/taslp2017-crnn-sed/tut-sed-synthetic-2016). 
+[TUT-SED Synthetic 2016](http://www.cs.tut.fi/sgn/arg/taslp2017-crnn-sed/tut-sed-synthetic-2016). 
 
 Our paper is submitted for review to the [IEEE World Congress on Computational 
 Intelligence/International Joint Conference on Neural Networks 
-(WCCI/IJCNN)](#https://wcci2020.org/).  
+(WCCI/IJCNN)](https://wcci2020.org/).  
 
 You can find an online version of our paper at arXiv: __url to be announced__
 
@@ -90,7 +90,7 @@ making an issue in this repository.
 ### Data set-up
 
 To set-up the data, you first have to follow the procedure and download the
-data from the [corresponding web-page](#http://www.cs.tut.fi/sgn/arg/taslp2017-crnn-sed/tut-sed-synthetic-2016).
+data from the [corresponding web-page](http://www.cs.tut.fi/sgn/arg/taslp2017-crnn-sed/tut-sed-synthetic-2016).
 Then, you should create your input/output values and use them with our method.
 
 The code in this repository offers data handling functionality. The 
