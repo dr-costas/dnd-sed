@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import pathlib
+from typing import Optional, Dict
+from pathlib import Path
 import yaml
 import numpy as np
 
@@ -16,7 +17,8 @@ __all__ = [
 ]
 
 
-def load_numpy_object(f_name):
+def load_numpy_object(f_name: Path) \
+        -> np.ndarray:
     """Loads and returns a numpy object.
 
     :param f_name: Path of the object.
@@ -27,12 +29,15 @@ def load_numpy_object(f_name):
     return np.load(str(f_name), allow_pickle=True)
 
 
-def load_settings_file(file_name, settings_dir=pathlib.Path('settings')):
+def load_settings_file(file_name: Path,
+                       settings_dir: Optional[Path] = Path('settings')) \
+        -> Dict:
     """Reads and returns the contents of a YAML settings file.
 
     :param file_name: Name of the settings file.
     :type file_name: pathlib.Path
-    :param settings_dir: Directory with the settings files.
+    :param settings_dir: Directory with the settings\
+                         files. Defaults to `Path('settings')`.
     :type settings_dir: pathlib.Path
     :return: Contents of the YAML settings file.
     :rtype: dict
@@ -41,7 +46,8 @@ def load_settings_file(file_name, settings_dir=pathlib.Path('settings')):
     return load_yaml_file(settings_file_path)
 
 
-def load_yaml_file(file_path):
+def load_yaml_file(file_path: Path) \
+        -> Dict:
     """Reads and returns the contents of a YAML file.
 
     :param file_path: Path to the YAML file.
