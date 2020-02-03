@@ -1,11 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from typing import Optional, Union, Tuple, \
+    MutableMapping, MutableSequence
 from functools import partial
 from datetime import datetime
 from contextlib import ContextDecorator
 
 from torch.nn import Module
+from torch.utils.data import DataLoader
 
 __author__ = 'Konstantinos Drossos -- Tampere University'
 __docformat__ = 'reStructuredText'
@@ -18,11 +21,15 @@ _time_f_spec = '7.2'
 _acc_f_spec = '6.2'
 _loss_f_spec = '7.3'
 _epoch_f_spec = '4'
-_s_data = '{m:<{len_m}}: {d1:5d} /{d2:5d}'
 
 
-def cmd_msg(the_msg, start='-- ', end='\n', flush=True,
-            decorate_prv=None, decorate_nxt=None):
+def cmd_msg(the_msg: str,
+            start: Optional[str] = '-- ',
+            end: Optional[str] = '\n',
+            flush: Optional[bool] = True,
+            decorate_prv: Optional[Union[Tuple[str, ], str, None]] = None,
+            decorate_nxt: Optional[Union[Tuple[str, ], str, None]] = None) \
+        -> None:
     """Prints a message.
 
     :param the_msg: The message.
@@ -31,18 +38,20 @@ def cmd_msg(the_msg, start='-- ', end='\n', flush=True,
     :type start: str
     :param end: Ending character.
     :type end: str
-    :param flush: Flush buffer now?
-    :type flush: bool
+    :param flush: Flush buffer now? Default to True
+    :type flush: bool, optional
     :param decorate_prv: Decoration for previous line.\
                          If argument is tuple or strings,\
                          then its element in the tuple is\
-                         printed on one previous line.
-    :type decorate_prv: tuple(str)|str|None
+                         printed on one previous line.\
+                         Default to None
+    :type decorate_prv: tuple(str)|str|None, optional
     :param decorate_nxt: Decoration for next line.\
                          If argument is tuple or strings,\
                          then its element in the tuple is\
-                         printed on one previous line.
-    :type decorate_nxt: tuple(str)|str|None
+                         printed on one previous line.\
+                         Default to None
+    :type decorate_nxt: tuple(str)|str|None, optional
     """
     msg_len = len(str(the_msg))
     print_w_n = partial(print, end='\n', flush=flush)
@@ -60,7 +69,8 @@ def cmd_msg(the_msg, start='-- ', end='\n', flush=True,
         print(f'{start}{dec[-1] * msg_len}', end=end, flush=flush)
 
 
-def date_and_time(**cmd_msg_kwargs):
+def date_and_time(**cmd_msg_kwargs: MutableMapping[str, Union[str, Tuple[str, ], bool, None]]) \
+        -> None:
     """Prints the date and time of `now`. As if it were `now`...
 
     Just call this function to print the current time and date.
@@ -70,7 +80,8 @@ def date_and_time(**cmd_msg_kwargs):
     cmd_msg(datetime.now().strftime('%Y-%m-%d %H:%M'), **cmd_msg_kwargs)
 
 
-def device_info(the_device):
+def device_info(the_device: str) \
+        -> None:
     """Prints an informative message about the device that we are using.
 
     :param the_device: The device.
@@ -84,17 +95,26 @@ def device_info(the_device):
 
 
 class InformAboutProcess(ContextDecorator):
-    def __init__(self, starting_msg, ending_msg='done', start='-- ', end='\n'):
+    def __init__(self,
+                 starting_msg: str,
+                 ending_msg: Optional[str] = 'done',
+                 start: Optional[str] = '-- ',
+                 end: Optional[str] = '\n') \
+            -> None:
         """Context manager and decorator for informing about a process.
 
-        :param starting_msg: The starting message, printed before the process starts.
+        :param starting_msg: The starting message, printed before\
+                             the process starts.
         :type starting_msg: str
-        :param ending_msg: The ending message, printed after process ends.
-        :type ending_msg: str
-        :param start: Starting decorator for the string to be printed.
-        :type start: str
-        :param end: Ending decorator for the string to be printed.
-        :type end: str
+        :param ending_msg: The ending message, printed after process\
+                           ends. Default 'done'.
+        :type ending_msg: str, optional
+        :param start: Starting decorator for the string to be\
+                      printed. Default to '-- '
+        :type start: str, optional
+        :param end: Ending decorator for the string to be\
+                    printed. Default to '\n'.
+        :type end: str, optional
         """
         super(InformAboutProcess, self).__init__()
         self.starting_msg = starting_msg
@@ -102,15 +122,25 @@ class InformAboutProcess(ContextDecorator):
         self.start_dec = start
         self.end_dec = end
 
-    def __enter__(self):
+    def __enter__(self) \
+            -> None:
+        """Prints message when entering the context.
+        """
         cmd_msg(f'{self.starting_msg}... ', start=self.start_dec, end='')
 
-    def __exit__(self, *exc_type):
+    def __exit__(self,
+                 *exc_type) \
+            -> bool:
+        """Prints message when exiting the context.
+        """
         cmd_msg(f'{self.ending_msg}.', start='', end=self.end_dec)
         return False
 
 
-def nb_examples(data, cases, b_size):
+def nb_examples(data: MutableSequence[DataLoader],
+                cases: MutableSequence[str],
+                b_size: int) \
+        -> None:
     """Prints amount of examples for each case.
 
     :param data: Data loaders to use.
@@ -126,9 +156,9 @@ def nb_examples(data, cases, b_size):
     endings = ['\n'] * (len(data) - 1)
     endings.append('\n\n')
 
-    [cmd_msg(_s_data.format(
-        m=m_s.format(t_v), d1=len(d) * b_size,
-        d2=len(d), len_m=len_m), end=e_s)
+    [cmd_msg(f'{m_s.format(t_v):<{len_m}}: '
+             f'{len(d) * b_size:5d} /{len(d):5d}',
+             end=e_s)
         for t_v, d, e_s in zip(cases, data, endings)]
 
 
@@ -137,20 +167,24 @@ def nb_parameters(module: Module, module_name: str = 'Module'):
 
     :param module: Module to use.
     :type module: torch.nn.Module
-    :param module_name: Name of the module, defaults Module
+    :param module_name: Name of the module, defaults Module.
     :type module_name: str, optional
     """
-    cmd_msg(f'{module_name} has {sum([i.numel() for i in module.parameters()])} parameters.')
+    cmd_msg(f'{module_name} has '
+            f'{sum([i.numel() for i in module.parameters()])} '
+            f'parameters.')
 
 
-def results_evaluation(f1_score, er_score, time_elapsed):
+def results_evaluation(f1_score: float,
+                       er_score: float,
+                       time_elapsed: float) -> None:
     """Prints the output of the testing process.
 
-    :param f1_score: The F1 score.
+    :param f1_score: F1 score.
     :type f1_score: float
-    :param er_score: The error rate.
+    :param er_score: Error rate.
     :type er_score: float
-    :param time_elapsed: The elapsed time for the epoch.
+    :param time_elapsed: Elapsed time for the epoch.
     :type time_elapsed: float
     """
     the_msg = f'F1:{f1_score:{_acc_f_spec}f} | ' \
@@ -160,27 +194,31 @@ def results_evaluation(f1_score, er_score, time_elapsed):
     cmd_msg(the_msg, start='  -- ')
 
 
-def results_training(epoch, training_loss, validation_loss,
-                     training_f1, training_er,
-                     validation_f1, validation_er,
-                     time_elapsed):
+def results_training(epoch: int,
+                     training_loss: float,
+                     validation_loss: Union[float, None],
+                     training_f1: float,
+                     training_er: float,
+                     validation_f1: Union[float, None],
+                     validation_er: Union[float, None],
+                     time_elapsed: float):
     """Prints the results of the pre-training step to console.
 
-    :param epoch: The epoch.
+    :param epoch: Epoch.
     :type epoch: int
-    :param training_loss: The loss of the training data.
+    :param training_loss: Loss of the training data.
     :type training_loss: float
-    :param validation_loss: The loss of the validation data.
+    :param validation_loss: Loss of the validation data.
     :type validation_loss: float | None
-    :param training_f1: The F1 score for the training data.
+    :param training_f1: F1 score for the training data.
     :type training_f1: float
-    :param training_er: The error rate for the training data.
+    :param training_er: Error rate for the training data.
     :type training_er: float
-    :param validation_f1: The F1 score for the validation data.
+    :param validation_f1: F1 score for the validation data.
     :type validation_f1: float | None
-    :param validation_er: The error rate for the validation data.
+    :param validation_er: Error rate for the validation data.
     :type validation_er: float | None
-    :param time_elapsed: The time elapsed for the epoch.
+    :param time_elapsed: Time elapsed for the epoch.
     :type time_elapsed: float
     """
     validation_loss = 'None' if validation_loss is None else validation_loss
