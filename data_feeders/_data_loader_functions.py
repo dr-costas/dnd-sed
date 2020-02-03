@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from typing import Optional, Dict
+from typing import Dict
 
 from torch.utils.data import DataLoader
 
