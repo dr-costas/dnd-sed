@@ -1,18 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# imports
+from tools import file_io
 
 __author__ = 'Konstantinos Drossos'
 __docformat__ = 'reStructuredText'
-__all__ = []
-
-
-def main():
-    pass
-
-
-if __name__ == '__main__':
-    main()
+__all__ = ['file_io']
 
 # EOF
