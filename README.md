@@ -8,8 +8,8 @@ This is the repository for the method presented in the paper
 "Sound Event Detection with Depthwise Separable and Dilated Convolutions", by 
 [K. Drossos](#https://tutcris.tut.fi/portal/en/persons/konstantinos-drosos(b1070370-5156-4280-b354-6291618bb965).html), 
 [S. I. Mimilakis](#https://www.idmt.fraunhofer.de/en/institute/doctorands/mimilakis.html), 
-[S. Gharib](#), 
-[Y. Li](#), 
+S. Gharib, 
+Y. Li, 
 and [T. Virtanen](#https://tutcris.tut.fi/portal/en/persons/tuomas-virtanen(210e58bb-c224-40a9-bf6c-5b786297e841).html).
 
 Our code is based on [PyTorch framework](#https://pytorch.org/) 
