@@ -1,0 +1,61 @@
+# ---------------------------------------
+# Settings for the experiments with the
+# TUT SED Real Life 2017 dataset.
+#
+# author: Konstantinos Drossos,
+#         Tampere University
+# ---------------------------------------
+#
+# Global settings
+global:
+  has_folds: No
+# Settings for the data loading
+data_loader:
+  batch_size: 16
+  shuffle: Yes
+  drop_last: Yes
+  root_dir: 'data'
+  scene:  # Not used in this dataset
+  data_fold:  # Not used in this dataset
+  data_version: 'synthetic'
+  input_features_file_name: 'features_normalized.npy'
+  target_values_input_name: 'target_values.npy'
+#
+# Settings for the optimizer
+optimizer:
+  lr: !!float 1e-3
+#
+# Settings for the training process
+training:
+  epochs: 300
+  validation_patience: 30
+  grad_norm: -1
+#
+# Settings for the SED models
+baseline: &crnn_settings
+  cnn_channels: 256
+  cnn_dropout: .25
+  rnn_in_dim: 256
+  rnn_out_dim: 256
+  nb_classes: 16
+baseline_dilated: &dilated_settings
+  cnn_channels: 256
+  cnn_dropout: .25
+  dilated_output_channels: 256
+  dilated_kernel_size:
+    - 5 # time dimension
+    - 5 # feature dimension
+  dilated_stride:
+    - 1 # time dimension
+    - 3 # feature dimension
+  dilated_padding:
+    - 20 # time dimension
+    - 0 # feature dimension
+  dilation_shape:
+    - 10 # time dimension
+    - 1 # feature dimension
+  dilated_nb_features: 84
+  nb_classes: 16
+dessed: *crnn_settings
+dessed_dilated: *dilated_settings
+# EOF
