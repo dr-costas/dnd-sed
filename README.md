@@ -20,7 +20,7 @@ Our paper is submitted for review to the [IEEE World Congress on Computational
 Intelligence/International Joint Conference on Neural Networks 
 (WCCI/IJCNN)](https://wcci2020.org/).  
 
-You can find an online version of our paper at arXiv: __url to be announced__
+You can find an online version of [our paper at arXiv](https://arxiv.org/abs/2002.00476).
 
 **If you use our method, please cite our paper.**  
 
