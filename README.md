@@ -57,7 +57,7 @@ parameters and the mean time needed for one training epoch (reduction of 85% and
 respectively). Also, we achieve an increase of the mean F1 score by 4/6% and a reduction
 of the mean error rate by 3.8%. 
 
-You can find more information in our paper!
+You can find more information in [our paper](https://arxiv.org/abs/2002.00476)!
 
 ----
 
