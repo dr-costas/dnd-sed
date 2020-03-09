@@ -27,7 +27,7 @@ class DESSEDDilated(Module):
                  nb_classes: int,
                  inner_kernel_size: Optional[Union[int, Tuple[int, int],
                                                    MutableSequence[int]]] = 1,
-                 inner_padding: Optional[int] = 1) \
+                 inner_padding: Optional[int] = 0) \
             -> None:
         """The DESSEDDilated model.
 
