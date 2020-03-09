@@ -110,5 +110,26 @@ results presented in the paper. We uses each settings file 10 times, and then we
 averaged the results. If you want to reproduce our results, then please remember 
 to follow our procedure. 
 
+To run the code you just have to use the `main.py` script, passing the proper
+arguments. The needed arguments for running the `main.py` script are: 
+
+ * The name of the model that will be used, `-m`. Accepted values are:
+   1. `baseline` -- This is the baseline, CRNN model.
+   2. `baseline_dilated` -- This is the baseline model, but with the RNN replaced
+   by a CNN with dilated convolution.
+   3. `dessed` -- This is the baseline model, but with the CNNs replaced by
+   depth-wise separable convolutions.
+   4. `dessed_dilated` -- This is our proposed model, with depth-wise separable
+   convolutions, followed by dilated convolution. 
+ * The name of the settings file to be used (without the extension `.yaml`): `-c`. For
+ example, if the settings file `synthetic_2016_k_55_d_1_1.yaml` is to be used, then
+ this argument has be `synthetic_2016_k_55_d_1_1`. 
+ 
+There are some optional arguments for the `main.py` script. These are: 
+
+ * The extension of the settings file, `-e`. Default value is `.yaml`.
+ * The directory where the settings file is ,`-d`. Default value is
+ `settings`.
+
 Enjoy!
  
