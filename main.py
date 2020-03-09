@@ -5,7 +5,8 @@ from pathlib import Path
 
 from experiments.experiment_process import do_process
 from tools.file_io import load_settings_file
-from tools.various import get_argument_parser, init_loggers
+from tools.various import get_argument_parser
+from tools.printing import InformAboutProcess, date_and_time
 
 __author__ = 'Konstantinos Drossos'
 __docformat__ = 'reStructuredText'
@@ -18,13 +19,12 @@ def main():
     config_file = args.config_file
     file_ext = args.file_ext
     settings_dir = args.file_dir
-    verbose = args.verbose
 
-    settings = load_settings_file(
-        file_name=Path(f'{config_file}{file_ext}'),
-        settings_dir=Path(settings_dir))
-
-    init_loggers(verbose=verbose)
+    date_and_time()
+    with InformAboutProcess('Loading settings'):
+        settings = load_settings_file(
+            file_name=Path(f'{config_file}{file_ext}'),
+            settings_dir=Path(settings_dir))
 
     do_process(
         settings_path=None,
