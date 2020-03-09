@@ -45,7 +45,10 @@ def do_process(settings_path: Optional[Union[Path, None]] = None,
         msg = 'Depth-wise separable with dilated convolutions experiment'
         model = DESSEDDilated
     else:
-        raise AttributeError(f'Unrecognized model `{model_to_use}`.')
+        raise AttributeError(f'Unrecognized model `{model_to_use}`. '
+                             f'Accepted model names are: `baseline`, '
+                             '`baseline_dilated`, `dessed`, '
+                             '`dessed_dilated`.')
 
     cmd_msg(msg, start='\n-- ')
     model_settings = settings[model_to_use]
