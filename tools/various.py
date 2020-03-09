@@ -5,16 +5,14 @@ from typing import Callable, TypeVar, \
     MutableSequence, MutableMapping, List, \
     Dict, Type, Union
 from argparse import ArgumentParser
-from sys import stdout
 
 from torch import Tensor
 from torch.nn import Module
-from loguru import logger
 
 __author__ = 'Konstantinos Drossos -- Tampere University'
 __docformat__ = 'reStructuredText'
 __all__ = ['CheckAllNone', 'get_argument_parser',
-           'apply_layer', 'init_loggers']
+           'apply_layer']
 
 
 T = TypeVar('T')
@@ -79,12 +77,7 @@ def get_argument_parser() \
                 [['--file-ext', '-e'],  # 3rd argument
                  {'type': str,
                   'default': '.yaml',
-                  'help': 'Extension of the settings file (default: `.yaml`).'}],
-                # ----------------------------------------
-                [['--verbose', '-v'],  # 4th argument
-                 {'default': True,
-                  'action': 'store_true',
-                  'help': 'Be verbose flag (default True).'}]]
+                  'help': 'Extension of the settings file (default: `.yaml`).'}]]
 
     arg_parser = ArgumentParser()
     [arg_parser.add_argument(*i[0], **i[1]) for i in the_args]
@@ -105,31 +98,5 @@ def apply_layer(layer_input: Tensor,
     :rtype: torch.Tensor
     """
     return layer(layer_input)
-
-
-def init_loggers(verbose: bool) \
-        -> None:
-    """Initializes the logging process.
-
-    :param verbose: Be verbose?
-    :type verbose: bool
-    """
-    logger.remove()
-
-    for indent in range(3):
-        log_string = '{level} | [{time}] {name} -- {space}{message}'.format(
-            level='{level}',
-            time='{time:HH:mm:ss}',
-            name='{name}',
-            message='{message}',
-            space=' ' * (indent*2))
-        logger.add(
-            stdout,
-            format=log_string,
-            level='INFO',
-            filter=lambda record, i=indent: record['extra']['indent'] == i)
-
-    if not verbose:
-        logger.disable()
 
 # EOF
