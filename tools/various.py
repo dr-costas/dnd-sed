@@ -59,6 +59,7 @@ def get_argument_parser() \
                 # ----------------------------------------
                 [['--model', '-m'],  # 1st argument
                  {'type': str,
+                  'required': True,
                   'help': 'The name of the model to use. '
                           'Accepted values are: `baseline`, '
                           '`baseline_dilated`, `dessed`, '
@@ -66,6 +67,7 @@ def get_argument_parser() \
                 # ----------------------------------------
                 [['--config-file', '-c'],  # 1st argument
                  {'type': str,
+                  'required': True,
                   'help': 'The name (without extension) '
                           'of the YAML file with the settings.'}],
                 # ---------------------------------
