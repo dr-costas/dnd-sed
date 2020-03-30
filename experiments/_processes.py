@@ -83,7 +83,8 @@ def testing(model: Module,
             data_loader: DataLoader,
             f1_func: Callable,
             er_func: Callable,
-            device: str):
+            device: str) \
+        -> None:
     """Tests a model.
 
     :param model: Model to be tested.
