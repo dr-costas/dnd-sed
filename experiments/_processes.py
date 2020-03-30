@@ -102,8 +102,10 @@ def testing(model: Module,
     model.eval()
     with no_grad():
         _, _, true_values, hat_values = _sed_epoch(
-            model=model, data_loader=data_loader,
-            objective=None, optimizer=None,
+            model=model,
+            data_loader=data_loader,
+            objective=None,
+            optimizer=None,
             device=device)
 
     end_time = time() - start_time
@@ -166,9 +168,12 @@ def training(model:Module,
 
         model = model.train()
         model, epoch_tr_loss, true_training, hat_training = _sed_epoch(
-            model=model, data_loader=data_loader_training,
-            objective=objective, optimizer=optimizer,
-            device=device, grad_norm=grad_norm)
+            model=model,
+            data_loader=data_loader_training,
+            objective=objective,
+            optimizer=optimizer,
+            device=device,
+            grad_norm=grad_norm)
 
         epoch_tr_loss = epoch_tr_loss.mean().item()
 
@@ -183,8 +188,10 @@ def training(model:Module,
         model = model.eval()
         with no_grad():
             model, epoch_va_loss, true_validation, hat_validation = _sed_epoch(
-                model=model, data_loader=data_loader_validation,
-                objective=objective, optimizer=None,
+                model=model,
+                data_loader=data_loader_validation,
+                objective=objective,
+                optimizer=None,
                 device=device)
 
         epoch_va_loss = epoch_va_loss.mean().item()
@@ -208,7 +215,8 @@ def training(model:Module,
         end_time = time() - start_time
 
         results_training(
-            epoch=epoch, training_loss=epoch_tr_loss,
+            epoch=epoch,
+            training_loss=epoch_tr_loss,
             validation_loss=epoch_va_loss,
             training_f1=f1_score_training,
             training_er=error_rate_training,
@@ -286,8 +294,10 @@ def experiment(settings: MutableMapping,
     cmd_msg('Starting training', start='\n\n-- ', end='\n\n')
 
     optimized_model = training(
-        model=model, data_loader_training=training_data,
-        optimizer=optimizer, objective=BCEWithLogitsLoss(),
+        model=model,
+        data_loader_training=training_data,
+        optimizer=optimizer,
+        objective=BCEWithLogitsLoss(),
         epochs=settings['training']['epochs'],
         data_loader_validation=validation_data,
         validation_patience=settings['training']['validation_patience'],
