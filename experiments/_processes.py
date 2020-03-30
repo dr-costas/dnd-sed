@@ -172,11 +172,11 @@ def training(model:Module,
         epoch_tr_loss = epoch_tr_loss.mean().item()
 
         f1_score_training = f1_func(
-            hat_training,
+            hat_training.sigmoid(),
             true_training).mean().item()
 
         error_rate_training = er_func(
-            hat_training,
+            hat_training.sigmoid(),
             true_training).mean().item()
 
         model = model.eval()
@@ -189,11 +189,11 @@ def training(model:Module,
         epoch_va_loss = epoch_va_loss.mean().item()
 
         f1_score_validation = f1_func(
-            hat_validation,
+            hat_validation.sigmoid(),
             true_validation).mean().item()
 
         error_rate_validation = er_func(
-            hat_validation,
+            hat_validation.sigmoid(),
             true_validation).mean().item()
 
         if epoch_va_loss < lowest_epoch_loss:
