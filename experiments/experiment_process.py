@@ -59,7 +59,10 @@ def do_process(settings_path: Optional[Union[Path, None]] = None,
                model_class=model)
 
 
-def main():
+def main() \
+        -> None:
+    """Main entry point.
+    """
     date_and_time()
 
     arg_parser = get_argument_parser()
