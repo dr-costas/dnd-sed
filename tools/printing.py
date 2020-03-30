@@ -162,7 +162,9 @@ def nb_examples(data: MutableSequence[DataLoader],
         for t_v, d, e_s in zip(cases, data, endings)]
 
 
-def nb_parameters(module: Module, module_name: str = 'Module'):
+def nb_parameters(module: Module,
+                  module_name: str = 'Module') \
+        -> None:
     """Prints the amount of parameters in a module.
 
     :param module: Module to use.
@@ -177,7 +179,8 @@ def nb_parameters(module: Module, module_name: str = 'Module'):
 
 def results_evaluation(f1_score: float,
                        er_score: float,
-                       time_elapsed: float) -> None:
+                       time_elapsed: float) \
+        -> None:
     """Prints the output of the testing process.
 
     :param f1_score: F1 score.
@@ -201,7 +204,8 @@ def results_training(epoch: int,
                      training_er: float,
                      validation_f1: Union[float, None],
                      validation_er: Union[float, None],
-                     time_elapsed: float):
+                     time_elapsed: float) \
+        -> None:
     """Prints the results of the pre-training step to console.
 
     :param epoch: Epoch.
